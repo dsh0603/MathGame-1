@@ -3,16 +3,23 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.SwingConstants;
+
 import java.awt.Color;
 import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 
 public class Level3 {
@@ -25,8 +32,42 @@ public class Level3 {
 	JLabel positionLabel = new JLabel("");
 	
 	private int fails = 0;
-	private int ans = 1;
+	private int ans = 0;
 	private int position = 0;
+	private int lid3, mom, dad;
+	private String Mom=null, Dad=null;
+	Connection connection=sqliteConnection.dbConnector();
+	{
+	try{		
+		String query="select * from Level3 where LID3 = (abs(random()) % (select max(LID3)+1 from Level3))";
+		PreparedStatement pst=connection.prepareStatement(query);
+		ResultSet rs=pst.executeQuery();
+		lid3 = rs.getInt("LID3");
+		mom = rs.getInt("Mom");
+		dad = rs.getInt("Dad");
+		if(mom==1)
+		{
+			ans=1;	
+			Mom="ones";
+			Dad="tens";
+		}
+		else
+		{
+			ans=2;
+			Mom="tens";
+			Dad="hundreds";
+		}
+		
+		System.out.println(lid3 + " " + mom + " " + dad);
+		rs.close();
+		pst.close();
+		
+	}catch(Exception e)
+	{
+		JOptionPane.showMessageDialog(null, e);
+		System.exit(1);
+	}
+	}	
 	
 	JPanel levelComPanel = new JPanel();
 	JPanel levelComBorder = new JPanel();
@@ -167,7 +208,7 @@ public class Level3 {
 		
 		gkTextArea.setWrapStyleWord(true);
 		gkTextArea.setLineWrap(true);
-		gkTextArea.setText("Can you help me return this little monster to his parents? I cant remember which two are his parents, but he remembers his mom being in the ones place, and his dad being in the tens place");
+		gkTextArea.setText("Can you help me return this little monster to his parents? I cant remember which two are his parents, but he remembers his mom being in the " + Mom + " place, and his dad being in the " + Dad + " place.");
 		gkPanel.add(gkTextArea);
 		
 		JPanel panel = new JPanel();
@@ -190,8 +231,8 @@ public class Level3 {
 				childPos2.setEnabled(false);
 				childPos1.setEnabled(false);
 				childMonsterLabel.setEnabled(true);
-				positionLabel.setText("000.");
-				gkTextArea.setText("Can you help me return this little monster to his parents? I cant remember which two are his parents, but he remembers his mom being in the ones place, and his dad being in the tens place");
+				positionLabel.setText("000.");				
+				gkTextArea.setText("Can you help me return this little monster to his parents? I cant remember which two are his parents, but he remembers his mom being in the " + Mom + " place, and his dad being in the " + Dad + " place.");
 				fails += 1;
 				
 				levelComBorder.setVisible(false);

@@ -4,24 +4,54 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.JPanel;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextArea;
+
 import java.awt.Color;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 
 public class Level2Test {
 
 	private JFrame frame;
-	private int fake = 0;
 	private int total = 0;
 	private int fails = 0;
+	public int lid2,npC1, npC2, npC3, npC4,npC5,gatekeeper2;
+	Connection connection=sqliteConnection.dbConnector();
+	{
+	try{		
+		String query="select * from Level2 where LID2 = (abs(random()) % (select max(LID2)+1 from Level2))";
+		PreparedStatement pst=connection.prepareStatement(query);
+		ResultSet rs=pst.executeQuery();
+		lid2 = rs.getInt("LID2");
+		npC1 = rs.getInt("NPC1");
+		npC2 = rs.getInt("NPC2");
+		npC3 = rs.getInt("NPC3");
+		npC4 = rs.getInt("NPC4");
+		npC5 = rs.getInt("NPC5");
+		gatekeeper2 = rs.getInt("NPC6");
+		
+		System.out.println(npC1 + " " + npC2 + " " + npC3 +" " + npC4 + " " + npC5 + " " + gatekeeper2);
+		rs.close();
+		pst.close();
+		
+	}catch(Exception e)
+	{
+		JOptionPane.showMessageDialog(null, e);
+	}
+	}
 	
 	private String equation = "0";
 	
@@ -100,7 +130,7 @@ public class Level2Test {
 		JButton gateKeeperButton = new JButton("give");
 		gateKeeperButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int finalVal = 24;
+				int finalVal = gatekeeper2;
 				equation = equation + " = " + total;
 				totalLabel.setText(equation);
 				if(total == finalVal){
@@ -134,7 +164,7 @@ public class Level2Test {
 		JButton npc1Button = new JButton("Take");
 		npc1Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int bellVal = 8;
+				int bellVal = npC1;
 				if(button1Clicked == false){
 					total = total + bellVal;
 					button1Clicked = true;
@@ -153,7 +183,7 @@ public class Level2Test {
 		frame.getContentPane().add(panel_4);
 		panel_4.setLayout(null);
 		
-		JLabel npc1Text = new JLabel("I've got 8 bells to spare");
+		JLabel npc1Text = new JLabel("I've got " + npC1 + " bells to spare");
 		npc1Text.setHorizontalAlignment(SwingConstants.CENTER);
 		npc1Text.setBounds(0, 0, 155, 16);
 		panel_4.add(npc1Text);
@@ -166,7 +196,7 @@ public class Level2Test {
 		JButton noc2Button = new JButton("Take");
 		noc2Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int bellVal = 4;
+				int bellVal = npC2;
 				if(button2Clicked == false){
 					total = total + bellVal;
 					button2Clicked = true;
@@ -185,7 +215,7 @@ public class Level2Test {
 		frame.getContentPane().add(panel_5);
 		panel_5.setLayout(null);
 		
-		JLabel npc2Text = new JLabel("Take these 4 silent bells!");
+		JLabel npc2Text = new JLabel("Take these "+ npC2 +" silent bells!");
 		npc2Text.setBounds(0, 0, 161, 16);
 		panel_5.add(npc2Text);
 		npc2Text.setHorizontalAlignment(SwingConstants.CENTER);
@@ -198,7 +228,7 @@ public class Level2Test {
 		JButton npc3Button = new JButton("Take");
 		npc3Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int bellVal = 11;
+				int bellVal = npC3;
 				if(button3Clicked == false){
 					total = total + bellVal;
 					button3Clicked = true;
@@ -217,7 +247,7 @@ public class Level2Test {
 		frame.getContentPane().add(panel_6);
 		panel_6.setLayout(null);
 		
-		JLabel npc3Text = new JLabel("Here's 11 bells if you need them");
+		JLabel npc3Text = new JLabel("Here's " + npC3 + " bells if you need them");
 		npc3Text.setBounds(0, 0, 212, 16);
 		panel_6.add(npc3Text);
 		npc3Text.setHorizontalAlignment(SwingConstants.CENTER);
@@ -230,7 +260,7 @@ public class Level2Test {
 		JButton npc4Button = new JButton("Take");
 		npc4Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int bellVal = 7;
+				int bellVal = npC4;
 				if(button4Clicked == false){
 					total = total + bellVal;
 					button4Clicked = true;
@@ -249,7 +279,7 @@ public class Level2Test {
 		frame.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
-		JLabel npc4Text = new JLabel("I suppose i can give you 7...");
+		JLabel npc4Text = new JLabel("I suppose i can give you " + npC4 +  " ...");
 		npc4Text.setHorizontalAlignment(SwingConstants.CENTER);
 		npc4Text.setBounds(0, 0, 181, 16);
 		panel_2.add(npc4Text);
@@ -262,7 +292,7 @@ public class Level2Test {
 		JButton npc5Button = new JButton("Take");
 		npc5Button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int bellVal = 9;
+				int bellVal = npC5;
 				if(button5Clicked == false){
 					total = total + bellVal;
 					button5Clicked = true;
@@ -281,7 +311,7 @@ public class Level2Test {
 		frame.getContentPane().add(panel_3);
 		panel_3.setLayout(null);
 		
-		JLabel npc5Text = new JLabel("Please, take 9 of mine");
+		JLabel npc5Text = new JLabel("Please, take " + npC5 + " of mine");
 		npc5Text.setBounds(0, 0, 145, 16);
 		panel_3.add(npc5Text);
 		npc5Text.setHorizontalAlignment(SwingConstants.CENTER);
@@ -296,7 +326,7 @@ public class Level2Test {
 		gatkeeperTextfield.setLineWrap(true);
 		gatkeeperTextfield.setColumns(6);
 		gatkeeperTextfield.setTabSize(4);
-		gatkeeperTextfield.setText("Find me 24 bells, and I'll let your borrow my sleigh to get to the ocean");
+		gatkeeperTextfield.setText("Find me " + gatekeeper2 + " bells, and I'll let your borrow my sleigh to get to the ocean");
 		gatkeeperTextfield.setRows(6);
 		panel.add(gatkeeperTextfield);
 		

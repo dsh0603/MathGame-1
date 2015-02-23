@@ -4,16 +4,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+
 import java.awt.SystemColor;
 import java.awt.Color;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.swing.JTextPane;
 
 
@@ -29,20 +39,48 @@ public class Level4 {
 	JLabel pile6 = new JLabel("");
 	
 	JLabel totalLabel = new JLabel("");
-	
-	private int total = 0;
-	private int givenTotal = 0;
-	private int answer = 0;
+		
+	private int total = 0;//This is the total that needs to match the answer in the end.
+	private int givenTotal = 0;//This is the total we start with.
+	private int answer = 0; //This is the remainder that we want.
 	private int fails = 0;
-	
-	private String equation = "";
-	
+	private int lid4;
 	private int pile1Val = 0;
 	private int pile2Val = 0;
 	private int pile3Val = 0;
 	private int pile4Val = 0;
 	private int pile5Val = 0;
 	private int pile6Val = 0;
+	Connection connection=sqliteConnection.dbConnector();
+	{
+	try{		
+		String query="select * from Level4 where LID4 = (abs(random()) % (select max(LID4)+1 from Level4))";
+		PreparedStatement pst=connection.prepareStatement(query);
+		ResultSet rs=pst.executeQuery();
+		lid4 = rs.getInt("LID4");
+		answer = rs.getInt("Remainder");
+		pile1Val = rs.getInt("Pile1");
+		pile2Val = rs.getInt("Pile2");
+		pile3Val = rs.getInt("Pile3");
+		pile4Val = rs.getInt("Pile4");
+		pile5Val = rs.getInt("Pile5");
+		pile6Val = rs.getInt("Pile6");
+		givenTotal = rs.getInt("GiveTotal");
+		total=givenTotal;
+		System.out.println(answer + " " + pile1Val + " " + pile2Val + " " + pile3Val +" " + pile4Val + " " + pile5Val + " " + pile6Val + " " + givenTotal);
+		rs.close();
+		pst.close();
+		
+	}catch(Exception e)
+	{
+		JOptionPane.showMessageDialog(null, e);
+	}
+	}
+	
+	
+	private String equation = "";
+	
+	
 	
 	private boolean btn1Check = false;
 	private boolean btn2Check = false;
@@ -169,8 +207,8 @@ public class Level4 {
 				}
 				else{
 					System.out.println("fail");
-					total = 0;
-					equation = "" + givenTotal;
+					//total = 0;
+					equation = "You have " + total + " cannon balls to put into the submersible. There should be " + answer + ".";//changed to total
 					totalLabel.setText(equation);
 					
 					pile1.setVisible(true);
@@ -216,7 +254,7 @@ public class Level4 {
 				if(btn2Check == false){
 					equation = equation + " - " + pile2Val;
 					totalLabel.setText(equation);
-					total = total - pile1Val;
+					total = total - pile2Val;
 					pile2.setVisible(false);
 					btn2Check = true;
 				}
@@ -292,9 +330,9 @@ public class Level4 {
 		
 		JTextArea gkTextArea = new JTextArea();
 		gkTextArea.setEditable(false);
-		gkTextArea.setBounds(6, 54, 127, 124);
+		gkTextArea.setBounds(6, 40, 140, 130);
 		frame.getContentPane().add(gkTextArea);
-		gkTextArea.setText("We need to move " + answer + " of these " + givenTotal + " cannonballs to the submersible to get you to the bottom of the ocean");
+		gkTextArea.setText("Take away the right number of these " + givenTotal + " cannonballs so that a remainder of " + answer + " cannonballs will go into the submersible and get it to the right depth of the ocean.");
 		gkTextArea.setWrapStyleWord(true);
 		gkTextArea.setLineWrap(true);
 		
