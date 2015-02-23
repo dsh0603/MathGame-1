@@ -7,7 +7,7 @@ public static Connection dbConnector()
 	try{
 		Class.forName("org.sqlite.JDBC");
 		Connection conn=DriverManager.getConnection("jdbc:sqlite:MathGame.db");
-		JOptionPane.showMessageDialog(null, "Connection successful.");
+		//JOptionPane.showMessageDialog(null, "Connection successful.");
 		return conn;
 	}catch(Exception e)
 	{
