@@ -24,7 +24,7 @@ import java.sql.ResultSet;
 
 public class Level3 {
 
-	private JFrame frame;
+	JFrame frame;
 	JLabel childPos1 = new JLabel("");
 	JLabel childPos2 = new JLabel("");
 	JLabel childMonsterLabel = new JLabel("");
@@ -101,7 +101,7 @@ public class Level3 {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 640, 500);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		

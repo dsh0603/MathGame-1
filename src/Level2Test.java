@@ -25,7 +25,7 @@ import java.sql.ResultSet;
 
 public class Level2Test {
 
-	private JFrame frame;
+	JFrame frame;
 	private int total = 0;
 	private int fails = 0;
 	public int lid2,npC1, npC2, npC3, npC4,npC5,gatekeeper2;
@@ -87,7 +87,7 @@ public class Level2Test {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 640, 499);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel_1 = new JPanel();

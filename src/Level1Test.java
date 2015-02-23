@@ -22,7 +22,7 @@ import java.sql.*;
 
 import javax.swing.*;
 
-public class Level1Test extends Level2Test {
+public class Level1Test{
 	private int total = 0;
 	private int fails = 0;
 	public int lid,npc1, npc2, npc3, npc4;
@@ -58,7 +58,7 @@ public class Level1Test extends Level2Test {
 	JTextPane txtpnGiveMe = new JTextPane();
 	private JLabel totalLabel = new JLabel("");
 	
-	private JFrame frame;
+	JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -91,7 +91,7 @@ public class Level1Test extends Level2Test {
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 640, 487);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		txtpnGiveMe.setEditable(false);

@@ -29,7 +29,7 @@ import javax.swing.JTextPane;
 
 public class Level4 {
 
-	private JFrame frame;
+	JFrame frame;
 	
 	JLabel pile1 = new JLabel("");
 	JLabel pile2 = new JLabel("");
@@ -122,7 +122,7 @@ public class Level4 {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 641, 499);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		

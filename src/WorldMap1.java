@@ -4,9 +4,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 import javax.swing.JPanel;
 
 
@@ -49,18 +51,64 @@ public class WorldMap1 {
 			JButton btnLevel_1 = new JButton("Level 1");
 			btnLevel_1.setBounds(36, 152, 76, 29);
 			frame.getContentPane().add(btnLevel_1);
+			btnLevel_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//o SQL inserts here for student, add fails and update what level they're on
+					try {
+						Level1Test window = new Level1Test();
+						window.frame.setVisible(true);
+					} catch (Exception j) {
+						j.printStackTrace();
+					}
+					//frame.dispose();				
+				}
+			});
 			
 			JButton btnLevel_2 = new JButton("Level 2");
 			btnLevel_2.setBounds(281, 100, 81, 29);
 			frame.getContentPane().add(btnLevel_2);
+			btnLevel_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Do SQL inserts here for student, add fails and update what level they're on
+					try {
+						Level2Test window = new Level2Test();
+						window.frame.setVisible(true);
+					} catch (Exception k) {
+						k.printStackTrace();
+					}
+					//frame.dispose();				
+				}
+			});
 			
 			JButton btnLevel_3 = new JButton("Level 3");
 			btnLevel_3.setBounds(638, 119, 81, 29);
 			frame.getContentPane().add(btnLevel_3);
+			btnLevel_3.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					try {
+						Level3 window = new Level3();
+						window.frame.setVisible(true);
+					} catch (Exception l) {
+						l.printStackTrace();
+					}
+					
+				}
+			});
+			
 			
 			JButton btnLevel_4 = new JButton("Level 4");
 			btnLevel_4.setBounds(423, 219, 76, 29);
 			frame.getContentPane().add(btnLevel_4);
+			btnLevel_4.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					try {
+						Level4 window = new Level4();
+						window.frame.setVisible(true);
+					} catch (Exception m) {
+						m.printStackTrace();
+					}					
+				}
+			});
 			
 			JButton btnLevel_5 = new JButton("Level 5");
 			btnLevel_5.setBounds(249, 306, 81, 29);
