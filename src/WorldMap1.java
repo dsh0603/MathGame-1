@@ -49,7 +49,7 @@ public class WorldMap1 {
 		frame.getContentPane().setLayout(null);
 			
 			JButton btnLevel_1 = new JButton("Level 1");
-			btnLevel_1.setBounds(36, 152, 76, 29);
+			btnLevel_1.setBounds(36, 152, 87, 29);
 			frame.getContentPane().add(btnLevel_1);
 			btnLevel_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -65,7 +65,7 @@ public class WorldMap1 {
 			});
 			
 			JButton btnLevel_2 = new JButton("Level 2");
-			btnLevel_2.setBounds(281, 100, 81, 29);
+			btnLevel_2.setBounds(281, 100, 87, 29);
 			frame.getContentPane().add(btnLevel_2);
 			btnLevel_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -81,7 +81,7 @@ public class WorldMap1 {
 			});
 			
 			JButton btnLevel_3 = new JButton("Level 3");
-			btnLevel_3.setBounds(638, 119, 81, 29);
+			btnLevel_3.setBounds(638, 119, 87, 29);
 			frame.getContentPane().add(btnLevel_3);
 			btnLevel_3.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
@@ -97,7 +97,7 @@ public class WorldMap1 {
 			
 			
 			JButton btnLevel_4 = new JButton("Level 4");
-			btnLevel_4.setBounds(423, 219, 76, 29);
+			btnLevel_4.setBounds(423, 219, 87, 29);
 			frame.getContentPane().add(btnLevel_4);
 			btnLevel_4.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
@@ -111,36 +111,52 @@ public class WorldMap1 {
 			});
 			
 			JButton btnLevel_5 = new JButton("Level 5");
-			btnLevel_5.setBounds(249, 306, 81, 29);
+			btnLevel_5.setBounds(249, 306, 87, 29);
 			frame.getContentPane().add(btnLevel_5);
 			
 			JButton btnLevel_6 = new JButton("Level 6");
-			btnLevel_6.setBounds(47, 499, 76, 29);
+			btnLevel_6.setBounds(47, 499, 87, 29);
 			frame.getContentPane().add(btnLevel_6);
 			
 			JButton btnLevel_7 = new JButton("Level 7");
-			btnLevel_7.setBounds(517, 412, 76, 29);
+			btnLevel_7.setBounds(517, 412, 87, 29);
 			frame.getContentPane().add(btnLevel_7);
 			
 			JButton btnLogout = new JButton("Logout");
 			btnLogout.setBounds(683, 1, 117, 29);
 			frame.getContentPane().add(btnLogout);
+			btnLogout.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent o) {
+					frame.dispose();//in future add some actions to feed the database and reinitialize main map.
+				}
+			});
 			
 			JLabel lblwelcome = new JLabel("Welcome:");
-			lblwelcome.setBounds(6, 6, 60, 16);
+			lblwelcome.setBounds(6, 6, 117, 16);
 			frame.getContentPane().add(lblwelcome);
 			
 			JLabel lblCurrentUnlockedLevel = new JLabel("Current Unlocked Level:");
-			lblCurrentUnlockedLevel.setBounds(212, 6, 150, 16);
+			lblCurrentUnlockedLevel.setBounds(212, 6, 214, 16);
 			frame.getContentPane().add(lblCurrentUnlockedLevel);
 		
 			JLabel backgroundLabel = new JLabel("");
 			backgroundLabel.setBounds(0, 29, 800, 624);
-			backgroundLabel.setIcon(new ImageIcon("images/WorldMap.jpg"));
+			backgroundLabel.setIcon(new ImageIcon("images/concept14.jpg"));
 			frame.getContentPane().add(backgroundLabel);
 			
 			JButton btnTutorial = new JButton("Tutorial");
 			btnTutorial.setBounds(556, 1, 117, 29);
 			frame.getContentPane().add(btnTutorial);
+			btnTutorial.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					try 
+					{
+						LeRules2 window = new LeRules2();
+						window.frame.setVisible(true);
+					} catch (Exception n) {
+						n.printStackTrace();
+					}
+				}
+			});
 	}
 }

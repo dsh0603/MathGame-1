@@ -9,7 +9,7 @@ import javax.swing.JTextPane;
 
 public class LeRules2 {
 
-	private JFrame frame;
+	JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -67,9 +67,10 @@ public class LeRules2 {
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
-			Level1Test nextscreen = new Level1Test();
+			//Level1Test nextscreen = new Level1Test();
 			//nextscreen.initialize();
 			//System.exit(0);
+			frame.dispose();
 		}
 		
 	}

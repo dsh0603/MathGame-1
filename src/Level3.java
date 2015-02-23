@@ -65,7 +65,7 @@ public class Level3 {
 	}catch(Exception e)
 	{
 		JOptionPane.showMessageDialog(null, e);
-		System.exit(1);
+		System.exit(0);
 	}
 	}	
 	
@@ -246,7 +246,7 @@ public class Level3 {
 		JButton btnBackToMap = new JButton("back to map");
 		btnBackToMap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.dispose();
+				frame.dispose();//in future add some actions to feed the database and reinitialize main map.
 			}
 		});
 		btnBackToMap.setBounds(512, 29, 117, 29);
