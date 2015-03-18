@@ -1,21 +1,90 @@
 import java.awt.EventQueue;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
 
-public class Login {
+public class Login<E> {
 
 	private JFrame frame;
-	private JTextField textField;
+	String name[]=new String[40],tName[]=new String[10],password,firstName,lastName, teacher, tPassword;
+	int level,tID;
+	//Queries database for list of student and teacher usernames.
+	Connection connection=sqliteConnection.dbConnector();
+	{
+	try{		
+		String query="select UName from Student";
+		PreparedStatement pst=connection.prepareStatement(query);
+		ResultSet rs=pst.executeQuery();
+		int i=0;
+		
+		while(rs.next())
+		{
+		name[i] = rs.getString("UName");
+		//password[i]=rs.getString("SPW");
+		//firstAndLast = firstAndLast + " " + rs.getString("LName");
+		//name[i]=firstAndLast;
+		//firstAndLast=null;
+		//System.out.println(name[i]);
+		i++;		
+		
+		}
+		rs.close();
+		pst.close();
+		
+	}catch(Exception e)
+	{
+		JOptionPane.showMessageDialog(null, e);
+	}
+	
+	try{		
+		String query2="select TUName from Teacher";
+		PreparedStatement pst2=connection.prepareStatement(query2);
+		ResultSet rs2=pst2.executeQuery();
+		int i=0;
+		
+		while(rs2.next())
+		{
+		tName[i] = rs2.getString("TUName");
+		//password[i]=rs.getString("SPW");
+		//firstAndLast = firstAndLast + " " + rs.getString("LName");
+		//name[i]=firstAndLast;
+		//firstAndLast=null;
+		//System.out.println(name[i]);
+		i++;		
+		
+		}
+		rs2.close();
+		pst2.close();
+		
+	}catch(Exception e)
+	{
+		JOptionPane.showMessageDialog(null, e);
+	}
+	}
+	String username=name[0], tUName=tName[0];
+	public JComboBox<E> box;
 	private JPasswordField passwordField;
+	private JComboBox<E> tbox;
+	private JPasswordField TPasswordField;
 
 	/**
 	 * Launch the application.
@@ -48,39 +117,159 @@ public class Login {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		JButton btnNewButton = new JButton("Login");
+		//System.out.println("select SPW from Student where UName='" + username + "'");
+		JButton btnNewButton = new JButton("Student Login");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try{
+					String query1="select * from Student where UName='" + username + "'";
+					PreparedStatement pst2=connection.prepareStatement(query1);
+					ResultSet rs=pst2.executeQuery();
+					password=rs.getString("SPW");
+					level=rs.getInt("Level");
+					firstName=rs.getString("FName");
+					lastName=rs.getString("LName");					
+					char[] input = passwordField.getPassword();
+					String in = new String(input);
+					System.out.println(in);
+					
+					
+					if(in.equals(password))
+					{
+						JOptionPane.showMessageDialog(null, "You are now logged in " + firstName +"!","Welcome!",JOptionPane.PLAIN_MESSAGE);
+						WorldMap1 window = new WorldMap1(level, firstName + " " + lastName);
+						window.frame.setVisible(true);
+						
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "This is the wrong password for " + username  + ". Please enter the correct password or select the correct username.");
+					System.out.println(input);
+					System.out.println(password);
+					
+					}
+					
+					//System.out.println(username+password+",");					
+					//JOptionPane.showMessageDialog(null, "Login successful.");				
+							
+				}catch(Exception p){
+					JOptionPane.showMessageDialog(null,p);
+					System.exit(1);
+				}
+			}
+
+			private Object toString(char[] input) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
-		btnNewButton.setBounds(165, 137, 118, 29);
+		btnNewButton.setBounds(12, 132, 160, 29);
 		frame.getContentPane().add(btnNewButton);
-		
+		/*50
 		textField = new JTextField();
-		textField.setBounds(141, 49, 161, 28);
+		textField.setBounds(12, 43, 161, 28);
 		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		textField.setColumns(10);*/
+		box=new JComboBox(name);
+		box.setBounds(12,40,161,28);
+		frame.getContentPane().add(box);
+		//box.setEditable(true);		
+			box.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			        username =  (String) box.getSelectedItem();
+			        System.out.println(username);
+			    }
+			});
+		
 		
 		passwordField = new JPasswordField();
 		passwordField.setText("");
-		passwordField.setBounds(141, 106, 161, 28);
+		passwordField.setBounds(12, 100, 161, 28);
 		frame.getContentPane().add(passwordField);
 		
+		
+		
+		//System.out.println(password);
+		
 		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setBounds(190, 78, 63, 16);
+		lblPassword.setBounds(45, 73, 75, 15);
 		frame.getContentPane().add(lblPassword);
 		
 		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setBounds(190, 29, 72, 16);
+		lblUsername.setBounds(43, 20, 77, 15);
 		frame.getContentPane().add(lblUsername);
 		
-		JLabel lblDoNotHave = new JLabel("Do not have an account?");
-		lblDoNotHave.setBounds(141, 225, 161, 16);
-		frame.getContentPane().add(lblDoNotHave);
+		JButton btnTeacher = new JButton("Teacher Login");
+		btnTeacher.setBounds(245, 132, 140, 29);
+		frame.getContentPane().add(btnTeacher);
+		btnTeacher.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
+					String query1="select * from Teacher where TUName='" + tUName + "'";
+					PreparedStatement pst2=connection.prepareStatement(query1);
+					ResultSet rs=pst2.executeQuery();
+					tID=rs.getInt("TID");
+					tPassword=rs.getString("PassWord");					
+					teacher=rs.getString("Name");
+										
+					char[] tinput = TPasswordField.getPassword();
+					String tin = new String(tinput);
+					System.out.println(tin);
+					
+					
+					if(tin.equals(tPassword))
+					{
+						JOptionPane.showMessageDialog(null, "You are now logged in " + tUName +"!","Welcome!",JOptionPane.PLAIN_MESSAGE);
+						AddStudent window = new AddStudent(tID, teacher);
+						window.frame.setVisible(true);
+						
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "This is the wrong password for " + tUName  + ". Please enter the correct password or select the correct username.");
+					System.out.println(tinput);
+					System.out.println(tPassword);
+					
+					}
+					
+					//System.out.println(username+password+",");					
+					//JOptionPane.showMessageDialog(null, "Login successful.");				
+							
+				}catch(Exception p){
+					JOptionPane.showMessageDialog(null,p);
+					System.exit(1);
+				}
+			}
+
+			private Object toString(char[] input) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
 		
-		JButton btnRegister = new JButton("Register");
-		btnRegister.setBounds(166, 243, 117, 29);
-		frame.getContentPane().add(btnRegister);
+		JLabel labelTeacherName = new JLabel("Teacher Username:");
+		labelTeacherName.setBounds(245, 20, 138, 15);
+		frame.getContentPane().add(labelTeacherName);
+		
+		tbox = new JComboBox(tName);
+		tbox.setBounds(245, 40, 140, 29);
+		frame.getContentPane().add(tbox);
+		tbox.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e) {
+		        tUName =  (String) tbox.getSelectedItem();
+		        System.out.println(tUName);
+		    }
+		});
+		JLabel lblTeacherPassword = new JLabel("Teacher Password:");
+		lblTeacherPassword.setBounds(245, 73, 136, 15);
+		frame.getContentPane().add(lblTeacherPassword);
+		
+		TPasswordField = new JPasswordField();
+		TPasswordField.setBounds(245, 100, 140, 28);
+		frame.getContentPane().add(TPasswordField);
+		
+		JButton btnNewButton_1 = new JButton("New Teacher");
+		btnNewButton_1.setBounds(245, 167, 140, 29);
+		frame.getContentPane().add(btnNewButton_1);
 	}
 }
