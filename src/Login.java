@@ -115,7 +115,7 @@ public class Login<E> {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		//System.out.println("select SPW from Student where UName='" + username + "'");
 		JButton btnNewButton = new JButton("Student Login");
@@ -132,11 +132,13 @@ public class Login<E> {
 					char[] input = passwordField.getPassword();
 					String in = new String(input);
 					System.out.println(in);
+					rs.close();
+					pst2.close();
 					
 					
 					if(in.equals(password))
 					{
-						JOptionPane.showMessageDialog(null, "You are now logged in " + firstName +"!","Welcome!",JOptionPane.PLAIN_MESSAGE);
+						//JOptionPane.showMessageDialog(null, "You are now logged in " + firstName +"!","Welcome!",JOptionPane.PLAIN_MESSAGE);
 						WorldMap1 window = new WorldMap1(level, firstName + " " + lastName);
 						window.frame.setVisible(true);
 						
@@ -215,11 +217,12 @@ public class Login<E> {
 					char[] tinput = TPasswordField.getPassword();
 					String tin = new String(tinput);
 					System.out.println(tin);
-					
+					rs.close();
+					pst2.close();
 					
 					if(tin.equals(tPassword))
 					{
-						JOptionPane.showMessageDialog(null, "You are now logged in " + tUName +"!","Welcome!",JOptionPane.PLAIN_MESSAGE);
+						//JOptionPane.showMessageDialog(null, "You are now logged in " + tUName +"!","Welcome!",JOptionPane.PLAIN_MESSAGE);
 						AddStudent window = new AddStudent(tID, teacher);
 						window.frame.setVisible(true);
 						
@@ -271,5 +274,14 @@ public class Login<E> {
 		JButton btnNewButton_1 = new JButton("New Teacher");
 		btnNewButton_1.setBounds(245, 167, 140, 29);
 		frame.getContentPane().add(btnNewButton_1);
+		
+		JButton btnClose = new JButton("Close");
+		btnClose.setBounds(245, 210, 140, 25);
+		frame.getContentPane().add(btnClose);
+		btnClose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.dispose();//in future add some actions to feed the database and reinitialize main map.
+			}
+		});
 	}
 }
